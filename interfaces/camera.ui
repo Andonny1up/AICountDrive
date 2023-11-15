@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>703</width>
+    <width>778</width>
     <height>500</height>
    </rect>
   </property>
@@ -15,6 +15,9 @@
     <width>0</width>
     <height>500</height>
    </size>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -33,6 +36,12 @@
 #frMain{
 	background-color: white;
 	border-radius: 15px;
+}
+QPushButton{
+	background-color: #3838FF;
+	padding: 5px;
+	border-radius: 5px;
+	color: white;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -69,8 +78,14 @@
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+            <item>
              <widget class="QFrame" name="frame_3">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>160</height>
+               </size>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -78,7 +93,7 @@
                <enum>QFrame::Raised</enum>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item>
+               <item alignment="Qt::AlignHCenter">
                 <widget class="QLabel" name="lblImg">
                  <property name="minimumSize">
                   <size>
@@ -96,7 +111,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../../PySide-Projects/intrefaceIA/resources.qrc">:/icon-black/assets/icon_black/camera.svg</pixmap>
+                  <pixmap resource="resources.qrc">:/icon-extra/assets/icon-extra/camera-security.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -112,11 +127,31 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>Camera</string>
+                  <string>Camara</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnConfiCamera">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="text">
+                  <string>Configurar</string>
                  </property>
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_4">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
              </widget>
             </item>
            </layout>
@@ -131,6 +166,20 @@
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item alignment="Qt::AlignLeft">
+             <widget class="QPushButton" name="btnUpdateVideo">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Actualizar</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icon-white/assets/icon_white/aperture.svg</normaloff>:/icon-white/assets/icon_white/aperture.svg</iconset>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QLabel" name="lblVideo">
               <property name="minimumSize">
@@ -165,7 +214,6 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../PySide-Projects/intrefaceIA/resources.qrc"/>
   <include location="resources.qrc"/>
  </resources>
  <connections/>

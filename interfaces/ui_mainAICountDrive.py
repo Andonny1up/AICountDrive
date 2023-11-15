@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainAICountDriveYlXPCj.ui'
+## Form generated from reading UI file 'mainAICountDrivehoWkCY.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.0
 ##
@@ -145,29 +145,29 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addWidget(self.btnDashboard)
 
-        self.btnCamera = QPushButton(self.frMenuButtons)
-        self.btnCamera.setObjectName(u"btnCamera")
-        font2 = QFont()
-        font2.setPointSize(12)
-        self.btnCamera.setFont(font2)
-        self.btnCamera.setCursor(QCursor(Qt.PointingHandCursor))
-        icon1 = QIcon()
-        icon1.addFile(u":/icon-white/assets/icon_white/camera.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnCamera.setIcon(icon1)
-        self.btnCamera.setIconSize(QSize(24, 24))
-
-        self.verticalLayout_9.addWidget(self.btnCamera)
-
         self.btnConfiguration = QPushButton(self.frMenuButtons)
         self.btnConfiguration.setObjectName(u"btnConfiguration")
+        font2 = QFont()
+        font2.setPointSize(12)
         self.btnConfiguration.setFont(font2)
         self.btnConfiguration.setCursor(QCursor(Qt.PointingHandCursor))
-        icon2 = QIcon()
-        icon2.addFile(u":/icon-white/assets/icon_white/settings.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnConfiguration.setIcon(icon2)
+        icon1 = QIcon()
+        icon1.addFile(u":/icon-white/assets/icon_white/settings.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnConfiguration.setIcon(icon1)
         self.btnConfiguration.setIconSize(QSize(24, 24))
 
         self.verticalLayout_9.addWidget(self.btnConfiguration)
+
+        self.btnCamera = QPushButton(self.frMenuButtons)
+        self.btnCamera.setObjectName(u"btnCamera")
+        self.btnCamera.setFont(font2)
+        self.btnCamera.setCursor(QCursor(Qt.PointingHandCursor))
+        icon2 = QIcon()
+        icon2.addFile(u":/icon-white/assets/icon_white/fast-forward.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnCamera.setIcon(icon2)
+        self.btnCamera.setIconSize(QSize(24, 24))
+
+        self.verticalLayout_9.addWidget(self.btnCamera)
 
 
         self.verticalLayout_10.addWidget(self.frMenuButtons, 0, Qt.AlignTop)
@@ -255,8 +255,8 @@ class Ui_MainWindow(object):
         self.lblLogo.setText("")
         self.lblNameAplication.setText(QCoreApplication.translate("MainWindow", u"AICountDrive", None))
         self.btnDashboard.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
-        self.btnCamera.setText(QCoreApplication.translate("MainWindow", u"Camara", None))
         self.btnConfiguration.setText(QCoreApplication.translate("MainWindow", u"Configuraci\u00f3n", None))
+        self.btnCamera.setText(QCoreApplication.translate("MainWindow", u"Iniciar Conteo", None))
         self.btnMenu.setText("")
         self.lblDashboard.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
         self.pushButton.setText("")

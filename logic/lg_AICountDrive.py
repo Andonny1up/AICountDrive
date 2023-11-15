@@ -12,7 +12,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         # Events
         self.btnMenu.clicked.connect(self.toggle_left_menu)
         self.btnDashboard.clicked.connect(self.clicked_btn_dashboard)
-        self.btnCamera.clicked.connect(self.clicked_btn_camera)
+        self.btnConfiguration.clicked.connect(self.clicked_btn_configuration)
 
     #Funtions Events
     def clicked_btn_dashboard(self):
@@ -20,7 +20,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.layoutContainer.addWidget(WidgetDashboard())
 
     
-    def clicked_btn_camera(self):
+    def clicked_btn_configuration(self):
         self.destroy_content()
         self.layoutContainer.addWidget(WidgetCamera())
 
