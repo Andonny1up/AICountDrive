@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainAICountDrivehoWkCY.ui'
+## Form generated from reading UI file 'mainAICountDrivetOVCIY.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.0
 ##
@@ -169,6 +169,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addWidget(self.btnCamera)
 
+        self.btnDestroy = QPushButton(self.frMenuButtons)
+        self.btnDestroy.setObjectName(u"btnDestroy")
+        self.btnDestroy.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.verticalLayout_9.addWidget(self.btnDestroy)
+
 
         self.verticalLayout_10.addWidget(self.frMenuButtons, 0, Qt.AlignTop)
 
@@ -257,6 +263,7 @@ class Ui_MainWindow(object):
         self.btnDashboard.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
         self.btnConfiguration.setText(QCoreApplication.translate("MainWindow", u"Configuraci\u00f3n", None))
         self.btnCamera.setText(QCoreApplication.translate("MainWindow", u"Iniciar Conteo", None))
+        self.btnDestroy.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
         self.btnMenu.setText("")
         self.lblDashboard.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
         self.pushButton.setText("")

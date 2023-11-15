@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'camerauKFqfN.ui'
+## Form generated from reading UI file 'cameraNPyhkJ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.0
 ##
@@ -45,6 +45,9 @@ class Ui_dashboard(object):
 "	padding: 5px;\n"
 "	border-radius: 5px;\n"
 "	color: white;\n"
+"}\n"
+"#lblVideo{\n"
+"	color: red;\n"
 "}")
         self.verticalLayout = QVBoxLayout(dashboard)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -129,7 +132,13 @@ class Ui_dashboard(object):
         self.lblVideo.setObjectName(u"lblVideo")
         self.lblVideo.setMinimumSize(QSize(500, 0))
         self.lblVideo.setMaximumSize(QSize(16777215, 16777215))
+        font1 = QFont()
+        font1.setPointSize(12)
+        font1.setBold(True)
+        self.lblVideo.setFont(font1)
+        self.lblVideo.setCursor(QCursor(Qt.ArrowCursor))
         self.lblVideo.setScaledContents(True)
+        self.lblVideo.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_2.addWidget(self.lblVideo)
 
@@ -154,6 +163,6 @@ class Ui_dashboard(object):
         self.lblCamera.setText(QCoreApplication.translate("dashboard", u"Camara", None))
         self.btnConfiCamera.setText(QCoreApplication.translate("dashboard", u"Configurar", None))
         self.btnUpdateVideo.setText(QCoreApplication.translate("dashboard", u"Actualizar", None))
-        self.lblVideo.setText("")
+        self.lblVideo.setText(QCoreApplication.translate("dashboard", u"Sin Conexi\u00f3n", None))
     # retranslateUi
 

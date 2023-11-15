@@ -42,6 +42,9 @@ QPushButton{
 	padding: 5px;
 	border-radius: 5px;
 	color: white;
+}
+#lblVideo{
+	color: red;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -194,11 +197,23 @@ QPushButton{
                 <height>16777215</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
               <property name="text">
-               <string/>
+               <string>Sin Conexión</string>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
