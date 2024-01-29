@@ -4,12 +4,15 @@ from interfaces.ui_mainAICountDrive import Ui_MainWindow
 from .lg_dashboard import WidgetDashboard
 from .lg_camera import WidgetCamera
 from .AI.AiCounterDrive import AiCountDrive
+from data.dataconnection import DataConnection
+from helpers import absPath
 
 class MainWindow(QMainWindow,Ui_MainWindow):
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
         self.layoutContainer.addWidget(WidgetDashboard())
+        self.database_create_connection()
 
         # Events
         self.btnMenu.clicked.connect(self.toggle_left_menu)
@@ -33,14 +36,14 @@ class MainWindow(QMainWindow,Ui_MainWindow):
     
     def cliked_btn_camera(self):
         self.ai_count_drive = AiCountDrive()
-        self.ai_count_drive.destroy_window()
+        self.ai_count_drive.stop_count()
         try:
             with open("camera_auth.json","r") as file:
                 data = json.load(file)
                 ip = data.get("IP","")
                 user = data.get("User","")
                 password = data.get("Password","")
-            self.ai_count_drive.connect_camera(f'rtsp://{user}:{password}@{ip}/stream')
+            # self.ai_count_drive.connect_camera(f'rtsp://{user}:{password}@{ip}/stream')
             self.ai_count_drive.run_count()
 
         except FileNotFoundError:
@@ -49,7 +52,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
     
     def cliked_btn_destroy(self):
-        self.ai_count_drive.destroy_window()
+        self.ai_count_drive.stop_count()
 
     
     def toggle_left_menu(self):
@@ -65,3 +68,10 @@ class MainWindow(QMainWindow,Ui_MainWindow):
             if widget:
                 widget.setParent(None)
                 widget.deleteLater()
+
+    
+    def database_create_connection(self):
+        self.database_name = absPath("data/AiCountDrive.db")
+        self.database = DataConnection(self.database_name)
+        self.database.check_database()
+        self.database.close_connection()

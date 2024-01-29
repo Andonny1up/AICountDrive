@@ -6,12 +6,12 @@
 #zip
 *.zip
 *.rar
-
+*.mp4
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.db
 # C extensions
 *.so
 

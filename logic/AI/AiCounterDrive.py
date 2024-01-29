@@ -4,13 +4,15 @@ import cvzone
 import math
 from .sort import *
 from pathlib import Path
+from data.dataconnection import DataConnection
 
 def absPath(file):
     return str(Path(__file__).parent.absolute() / file)
 
 class AiCountDrive:
     def __init__(self):
-        self.cap = cv2.VideoCapture("../Videos/cars.mp4")
+        self.running = False
+        self.cap = cv2.VideoCapture(absPath('cars.mp4'))
         self.cap.set(3,1280)
         self.cap.set(4,720)
 
@@ -45,18 +47,37 @@ class AiCountDrive:
         self.truck_count = []
 
 
+        # Crear una instancia de DataConnection
+        self.data_connection = DataConnection(absPath("../../data/AiCountDrive.db"))
+        self.data_connection.check_database()
+        self.data_connection.close_connection()
+
+        # Asegurarse de que la base de datos y la tabla existen
+        # self.data_connection.check_database()
+
+
     def connect_camera(self,connection):
+        """
+        Para conectar a una camara ip
+        """
         self.cap = cv2.VideoCapture(connection)
         self.cap.set(3,1280)
         self.cap.set(4,720)
 
 
     def define_line(self,y1,y2,x):
+        """Define la linea de conteo"""
         self.limits = [y1,x,y2,x]
 
 
+    def stop_count(self):
+        """ Detiene el conteo de vehiculos"""
+        self.running = False
+
+
     def run_count(self):
-        while True:
+        self.running = True
+        while self.running:
             succes, self.img = self.cap.read() # captura un boleno y un frame
             img_region = cv2.bitwise_and(self.img,self.mask) # corto la region de la imagen
 
@@ -107,10 +128,10 @@ class AiCountDrive:
             results_tracker_truck =  self.tracker_truck.update(detections_truck)
             cv2.line(self.img,(self.limits[0],self.limits[1]),(self.limits[2],self.limits[3]),(0,255,255),5)
 
-            self.detection_count(results_tracker_car,self.car_count,self.colours[0])
-            self.detection_count(results_tracker_moto,self.moto_count,self.colours[1])
-            self.detection_count(results_tracker_bus,self.bus_count,self.colours[2])  
-            self.detection_count(results_tracker_truck,self.truck_count,self.colours[3])  
+            self.detection_count(results_tracker_car,self.car_count,self.colours[0],'auto')
+            self.detection_count(results_tracker_moto,self.moto_count,self.colours[1],'moto')
+            self.detection_count(results_tracker_bus,self.bus_count,self.colours[2],'bus')  
+            self.detection_count(results_tracker_truck,self.truck_count,self.colours[3],'camion')  
 
             cv2.putText(self.img,str(len(self.car_count)),(255,100),cv2.FONT_HERSHEY_PLAIN,5,self.colours[0],8)
             cv2.putText(self.img,str(len(self.moto_count)),(455,100),cv2.FONT_HERSHEY_PLAIN,5,self.colours[1],8)
@@ -130,7 +151,9 @@ class AiCountDrive:
         return detections
 
 
-    def detection_count(self,results_tracker, count, color):
+    def detection_count(self,results_tracker, count, color, object_type):
+        """Esta funcion cuenta los objetos que pasan por la linea"""
+        # mas tarde debo agregar un atributo type para añadirlos a la base de datos segun su tipo.
         for result in results_tracker:
             x1,y1,x2,y2,id = result
             x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
@@ -145,66 +168,14 @@ class AiCountDrive:
                     count.append(id)
                     cv2.line(self.img,(self.limits[0],self.limits[1]),(self.limits[2],self.limits[3]),(0,0,255),5)
 
+                    # Para añadir a la base de datos
+                    self.data_connection.open_connection()
+                    self.data_connection.db.exec_(f"insert into vehicles (type) values('{object_type}')")
+                    self.data_connection.db.commit()
+                    self.data_connection.close_connection()
 
     def destroy_window(self):
         cv2.destroyAllWindows()
-
-    
-    def frame_prueba(self):
-        succes, self.img = self.cap.read() # captura un boleno y un frame
-        img_region = cv2.bitwise_and(self.img,self.mask) # corto la region de la imagen
-        
-        
-        results = self.model(img_region,stream=True)
-        
-        detections_car = np.empty((0,5))
-        detections_moto = np.empty((0,5))
-        detections_bus = np.empty((0,5))
-        detections_truck = np.empty((0,5))
-        
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                x1,y1,x2,y2=box.xyxy[0]
-                x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
-                w, h = x2-x1,y2-y1
-                
-                #confidence
-                conf = math.ceil((box.conf[0]*100))/100
-                print(conf)
-                
-                # Class name
-                cls = int(box.cls[0])
-                currentClass = self.classNames[cls]
-                
-                match currentClass:
-                    case "auto":
-                        detections_car = self.select_class(detections_car,self.classNames[cls],conf,x1,x2,y1,y2,self.colours[0])
-                    case "moto":
-                        detections_moto = self.select_class(detections_moto,self.classNames[cls],conf,x1,x2,y1,y2,self.colours[1])
-                    case "bus":
-                        detections_bus =  self.select_class(detections_bus,self.classNames[cls],conf,x1,x2,y1,y2,self.colours[2])
-                    case "camion":
-                        detections_truck =  self.select_class(detections_truck,self.classNames[cls],conf,x1,x2,y1,y2,self.colours[3])
-                    
-                    
-        results_tracker_car = self.tracker_car.update(detections_car)
-        results_tracker_moto = self.tracker_moto.update(detections_moto)
-        results_tracker_bus = self.tracker_bus.update(detections_bus)
-        results_tracker_truck =  self.tracker_truck.update(detections_truck)
-        cv2.line(self.img,(self.limits[0],self.limits[1]),(self.limits[2],self.limits[3]),(0,255,255),5)
-
-        self.detection_count(results_tracker_car,self.car_count,self.colours[0])
-        self.detection_count(results_tracker_moto,self.moto_count,self.colours[1])
-        self.detection_count(results_tracker_bus,self.bus_count,self.colours[2])  
-        self.detection_count(results_tracker_truck,self.truck_count,self.colours[3])  
-
-        cv2.putText(self.img,str(len(self.car_count)),(255,100),cv2.FONT_HERSHEY_PLAIN,5,self.colours[0],8)
-        cv2.putText(self.img,str(len(self.moto_count)),(455,100),cv2.FONT_HERSHEY_PLAIN,5,self.colours[1],8)
-        cv2.putText(self.img,str(len(self.bus_count)),(655,100),cv2.FONT_HERSHEY_PLAIN,5,self.colours[2],8)
-        cv2.putText(self.img,str(len(self.truck_count)),(855,100),cv2.FONT_HERSHEY_PLAIN,5,self.colours[3],8)
-        
-        return self.img
 
 
 
